@@ -71,8 +71,12 @@ int main(int argc, char const *argv[]) {
         linecounter++;
         totalcounter++;
 
+        // reached size limit
+        if (totalcounter == 512)
+            return 0;
+
         // only allow 80 characters on each line
-        if (linecounter == 79) {
+        if (linecounter == 80) {
             linecounter = 0;
             printf("\n");
         }
@@ -82,7 +86,7 @@ int main(int argc, char const *argv[]) {
         b = tolower(fgetc(key));
     }
 
-    while (totalcounter != 511)
+    while (totalcounter != 512)
     {
         while (isalpha(b) == 0) {
             b = tolower(fgetc(key));
@@ -119,7 +123,7 @@ int main(int argc, char const *argv[]) {
         totalcounter++;
 
         // only allow 80 characters on each line
-        if (linecounter == 79) {
+        if (linecounter == 80) {
             linecounter = 0;
             printf("\n");
         }

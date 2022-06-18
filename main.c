@@ -1,4 +1,24 @@
-// David Winfield
+/*=============================================================================
+| Assignment: pa01 - Encrypting a plaintext file using the Vigenere cipher
+|
+| Author: David Winfield
+| Language: C
+|
+| To Compile: javac pa01.java
+| gcc -o pa01 pa01.c
+|
+| To Execute:
+| or c -> ./pa01 kX.txt pX.txt
+| where kX.txt is the keytext file
+| and pX.txt is plaintext file
+|
+| Note: All input files are simple 8 bit ASCII input
+|
+| Class: CIS3360 - Security in Computing - Summer 2022
+| Instructor: McAlpin
+| Due Date: June 19, 2022
+|
++=============================================================================*/
 
 #include <stdio.h>
 #include <string.h>
@@ -31,41 +51,34 @@ int main(int argc, char const *argv[]) {
                 break;
         }
         if (a == EOF) {
-            // printf("EOF\n\n");
             break;
         }
            
-
         while (isalpha(b) == 0) {
             b = tolower(fgetc(key));
 
             if (b == '\n') {
-                // printf("eol\n");
-                b = fgetc(key);
+                b = tolower(fgetc(key));
             }
             // reset key file as needed
             if (b == EOF) {
-                // printf("eof\n");
                 rewind(key);
-                b = fgetc(key);
+                b = tolower(fgetc(key));
             }
         }
 
         // b character management
         // ignore new line characters
         if (b == '\n') {
-            // printf("eol\n");
-            b = fgetc(key);
+            b = tolower(fgetc(key));
         }
         // reset key file as needed
         if (b == EOF) {
-            // printf("eof\n");
             rewind(key);
-            b = fgetc(key);
+            b = tolower(fgetc(key));
         }
 
         char c = ((a - 'a' + b - 'a') % 26) + 'a';
-        // printf("%c & %c -> %c\n", a, b, c);
         printf("%c", c);
 
         linecounter++;
@@ -92,31 +105,26 @@ int main(int argc, char const *argv[]) {
             b = tolower(fgetc(key));
 
             if (b == '\n') {
-                // printf("eol\n");
-                b = fgetc(key);
+                b = tolower(fgetc(key));
             }
             // reset key file as needed
             if (b == EOF) {
-                // printf("eof\n");
                 rewind(key);
-                b = fgetc(key);
+                b = tolower(fgetc(key));
             }
         }
         // b character management
         // ignore new line characters
         if (b == '\n') {
-            // printf("eol\n");
-            b = fgetc(key);
+            b = tolower(fgetc(key));
         }
         // reset key file as needed
         if (b == EOF) {
-            // printf("eof\n");
             rewind(key);
-            b = fgetc(key);
+            b = tolower(fgetc(key));
         }
 
         char c = (('x' - 'a' + b - 'a') % 26) + 'a';
-        // printf("%c & %c -> %c\n", a, b, c);
         printf("%c", c);
 
         linecounter++;
@@ -133,3 +141,12 @@ int main(int argc, char const *argv[]) {
 
     return 0;
 }
+
+/*=============================================================================
+| I David Winfield (4707545) affirm that this program is
+| entirely my own work and that I have neither developed my code together with
+| any another person, nor copied any code from any other person, nor permitted
+| my code to be copied or otherwise used by any other person, nor have I
+| copied, modified, or otherwise used programs created by others. I acknowledge
+| that any violation of the above terms will be treated as academic dishonesty.
++=============================================================================*/

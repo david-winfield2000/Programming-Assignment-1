@@ -4,8 +4,7 @@
 #include <string.h>
 #include <ctype.h>
 
-int main(int argc, char const *argv[])
-{
+int main(int argc, char const *argv[]) {
     // function takes in 2 arguments
     // argument 1 = encryption key file
     // argument 2 = file to be encrypted
@@ -24,25 +23,42 @@ int main(int argc, char const *argv[])
     int linecounter = 0;
     int totalcounter = 0;
     
-    while (a != EOF)
-    {
+    while (a != EOF) {
         // a character management
-        if (isalpha(a) == 0 || isspace(a) == 1)
-        {
+        while (isalpha(a) == 0) {
             a = tolower(fgetc(text));
-            continue;
+            if (a == EOF)
+                break;
+        }
+        if (a == EOF) {
+            // printf("EOF\n\n");
+            break;
+        }
+           
+
+        while (isalpha(b) == 0) {
+            b = tolower(fgetc(key));
+
+            if (b == '\n') {
+                // printf("eol\n");
+                b = fgetc(key);
+            }
+            // reset key file as needed
+            if (b == EOF) {
+                // printf("eof\n");
+                rewind(key);
+                b = fgetc(key);
+            }
         }
 
         // b character management
         // ignore new line characters
-        if (b == '\n')
-        {
+        if (b == '\n') {
             // printf("eol\n");
             b = fgetc(key);
         }
         // reset key file as needed
-        if (b == EOF)
-        {
+        if (b == EOF) {
             // printf("eof\n");
             rewind(key);
             b = fgetc(key);
@@ -52,43 +68,64 @@ int main(int argc, char const *argv[])
         // printf("%c & %c -> %c\n", a, b, c);
         printf("%c", c);
 
-        // linecounter++;
-        // totalcounter++;
+        linecounter++;
+        totalcounter++;
 
-        // if (linecounter == 79)
-        //     printf("\n");
+        // only allow 80 characters on each line
+        if (linecounter == 79) {
+            linecounter = 0;
+            printf("\n");
+        }
 
         // get next characters
         a = tolower(fgetc(text));
         b = tolower(fgetc(key));
     }
 
-    // while (totalcounter != 511)
-    // {
-    //     // b character management
-    //     // reset key file as needed
-    //     if (b == EOF)
-    //     {
-    //         rewind(key);
-    //         b = fgetc(key);
-    //     }
-    //     // ignore new line characters
-    //     if (b == '\n')
-    //     {
-    //         b = fgetc(key);
-    //     }
+    while (totalcounter != 511)
+    {
+        while (isalpha(b) == 0) {
+            b = tolower(fgetc(key));
 
-    //     char c = (('x' - 'a' + b - 'a') % 26) + 'a';
-    //     printf("%c", c);
+            if (b == '\n') {
+                // printf("eol\n");
+                b = fgetc(key);
+            }
+            // reset key file as needed
+            if (b == EOF) {
+                // printf("eof\n");
+                rewind(key);
+                b = fgetc(key);
+            }
+        }
+        // b character management
+        // ignore new line characters
+        if (b == '\n') {
+            // printf("eol\n");
+            b = fgetc(key);
+        }
+        // reset key file as needed
+        if (b == EOF) {
+            // printf("eof\n");
+            rewind(key);
+            b = fgetc(key);
+        }
 
-    //     linecounter++;
-    //     totalcounter++;
+        char c = (('x' - 'a' + b - 'a') % 26) + 'a';
+        // printf("%c & %c -> %c\n", a, b, c);
+        printf("%c", c);
 
-    //     if (linecounter == 79)
-    //         printf("\n");
+        linecounter++;
+        totalcounter++;
 
-    //     b = tolower(fgetc(key));
-    // }
+        // only allow 80 characters on each line
+        if (linecounter == 79) {
+            linecounter = 0;
+            printf("\n");
+        }
+
+        b = tolower(fgetc(key));
+    }
 
     return 0;
 }

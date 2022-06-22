@@ -25,9 +25,7 @@
 #include <ctype.h>
 
 int main(int argc, char const *argv[]) {
-    // function takes in 2 arguments
-    // argument 1 = encryption key file
-    // argument 2 = file to be encrypted
+    // function takes in 2 arguments (argument 1 = encryption key file, argument 2 = file to be encrypted)
 
     // open both files in read mode
     FILE *text;
@@ -53,7 +51,8 @@ int main(int argc, char const *argv[]) {
         if (a == EOF) {
             break;
         }
-           
+        
+        // b character management
         while (isalpha(b) == 0) {
             b = tolower(fgetc(key));
 
@@ -68,7 +67,6 @@ int main(int argc, char const *argv[]) {
         }
 
         // b character management
-        // ignore new line characters
         if (b == '\n') {
             b = tolower(fgetc(key));
         }
@@ -113,12 +111,11 @@ int main(int argc, char const *argv[]) {
                 b = tolower(fgetc(key));
             }
         }
+
         // b character management
-        // ignore new line characters
         if (b == '\n') {
             b = tolower(fgetc(key));
         }
-        // reset key file as needed
         if (b == EOF) {
             rewind(key);
             b = tolower(fgetc(key));
